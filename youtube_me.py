@@ -8,17 +8,11 @@ def clear_screen():
     os.system(['clear','cls'][os.name == 'nt'])
 
 def check_file_system():
-    if os.path.isdir(os.path.expanduser("~/youtube_me")):
-        path_exists = True
-    else:
+    if not os.path.isdir(os.path.expanduser("~/youtube_me")):
         os.mkdir(os.path.expanduser("~/youtube_me"))
-    if os.path.isdir(os.path.expanduser("~/youtube_me/videos")):
-        path_exists = True
-    else:
+    if not os.path.isdir(os.path.expanduser("~/youtube_me/videos")):
         os.mkdir(os.path.expanduser("~/youtube_me/videos"))
-    if os.path.isfile(os.path.expanduser("~/youtube_me/download.list")):
-        file_exists = True
-    else:
+    if not os.path.isfile(os.path.expanduser("~/youtube_me/download.list")):
         with open(os.path.expanduser("~/youtube_me/download.list"),'w+') as filePointer:
             filePointer.write("\n")
 
