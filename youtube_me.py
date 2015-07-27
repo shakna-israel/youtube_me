@@ -2,21 +2,39 @@ from __future__ import unicode_literals
 import youtube_dl
 import time
 import os
+import argparse
 
 def clear_screen():
     os.system(['clear','cls'][os.name == 'nt'])
 
+def get_time():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--start-time", help="The 24 hour notation of the hour that you want to start downloading. e.g 13")
+    parser.add_argument("-e", "--end-time", help="The 24 hour notation of the hour that you want to end downloading. e.g. 23")
+    cliArgs = parser.parse_args()
+    if cliArgs.start_time:
+        startTime = int(cliArgs.start_time)
+    else:
+        startTime = 0
+    if cliArgs.end_time:
+        endTime = int(cliArgs.end_time)
+    else:
+        endTime = 24
+    return {"startTime":startTime,"endTime":endTime}
+
 def get_files():
+    startTime = int(get_time()['startTime'])
+    endTime = int(get_time()['endTime'])
     infinite_loop = True
     while infinite_loop:
-        if int(time.strftime("%H")) > 0 and int(time.strftime("%H")) < 9:
+        if int(time.strftime("%H")) > startTime and int(time.strftime("%H")) < endTime:
             video_folder = os.path.expanduser("~/youtube_me/videos")
             video_title = video_folder + "/" + '%(title)s' + ".mp4"
             ydl_opts = {'nooverwrites':True,'outtmpl':video_title,'sleep-interval':'10'}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 with open(os.path.expanduser("~/youtube_me/download.list"),'r') as filePointer:
                     for line in filePointer:
-                        if int(time.strftime("%H")) > 0 and int(time.strftime("%H")) < 9:
+                        if int(time.strftime("%H")) > startTime and int(time.strftime("%H")) < endTime:
                             if line.strip() != '':
                                 ydl.download([line.strip("\n").strip("\r")])
         else:
