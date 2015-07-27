@@ -13,8 +13,9 @@ def get_files():
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 with open(os.path.expanduser("~/youtube_me/download.list"),'r') as filePointer:
                     for line in filePointer:
-                        if line.strip() != '':
-                            ydl.download([line.strip("\n").strip("\r")])
+                        if int(time.strftime("%H")) > 0 and int(time.strftime("%H")) < 9:
+                            if line.strip() != '':
+                                ydl.download([line.strip("\n").strip("\r")])
         else:
             print("The current time is... " + time.strftime("%H:%M"))
             time.sleep(120)
