@@ -1,8 +1,13 @@
+#!/usr/bin/env python
+
 from __future__ import unicode_literals
 import youtube_dl
 import time
 import os
 import argparse
+
+__ver__ = "0.01"
+__author__ = "James Milne"
 
 def clear_screen():
     """A nice little cross-platform way of clearing the console"""
