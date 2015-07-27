@@ -8,7 +8,7 @@ def get_files():
     while infinite_loop:
         if int(time.strftime("%H")) > 0 and int(time.strftime("%H")) < 9:
             video_folder = os.path.expanduser("~/youtube_me/videos")
-            video_title = video_folder + "/" + '%(title)s'
+            video_title = video_folder + "/" + '%(title)s' + ".mp4"
             ydl_opts = {'nooverwrites':True,'outtmpl':video_title,'sleep-interval':'10'}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 with open(os.path.expanduser("~/youtube_me/download.list"),'r') as filePointer:
