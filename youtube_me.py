@@ -3,6 +3,9 @@ import youtube_dl
 import time
 import os
 
+def clear_screen():
+    os.system(['clear','cls'][os.name == 'nt'])
+
 def get_files():
     infinite_loop = True
     while infinite_loop:
@@ -17,7 +20,11 @@ def get_files():
                             if line.strip() != '':
                                 ydl.download([line.strip("\n").strip("\r")])
         else:
-            print("The current time is... " + time.strftime("%H:%M"))
+            clear_screen()
+            hours_til = 24 - int(time.strftime("%H"))
+            mins_til = 60 - int(time.strftime("%M"))
+            time_til = [hours_til,mins_til]
+            print("Time till next download... " + str(time_til[0]) + ":" + str(time_til[1]))
             time.sleep(120)
 
 if __name__ == '__main__':
