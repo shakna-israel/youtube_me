@@ -5,9 +5,11 @@ import os
 import argparse
 
 def clear_screen():
+    """A nice little cross-platform way of clearing the console"""
     os.system(['clear','cls'][os.name == 'nt'])
 
 def check_file_system():
+    """A simple function to ensure the folder ~/youtube_me exists, and the download.list file exists inside that folder"""
     if not os.path.isdir(os.path.expanduser("~/youtube_me")):
         os.mkdir(os.path.expanduser("~/youtube_me"))
     if not os.path.isdir(os.path.expanduser("~/youtube_me/videos")):
@@ -17,6 +19,7 @@ def check_file_system():
             filePointer.write("\n")
 
 def get_time():
+    """A simple way of getting input for the times to download within"""
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--start-time", help="The 24 hour notation of the hour that you want to start downloading. e.g 13")
     parser.add_argument("-e", "--end-time", help="The 24 hour notation of the hour that you want to end downloading. e.g. 23")
@@ -32,6 +35,7 @@ def get_time():
     return {"startTime":startTime,"endTime":endTime}
 
 def get_files():
+    """The magic that uses youtube-dl to download our list, or print the time until downloading will happen"""
     startTime = int(get_time()['startTime'])
     endTime = int(get_time()['endTime'])
     infinite_loop = True
